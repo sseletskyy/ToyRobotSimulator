@@ -85,7 +85,7 @@ Expected output
 Deliverables
 ------------
 
-The Ruby source files, the test data and any test code.
+The Ruby, JavaScript or Java source files, the test data and any test code.
 
 It is not required to provide any graphical output showing the movement of
 the toy robot.
