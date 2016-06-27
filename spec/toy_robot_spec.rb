@@ -73,4 +73,20 @@ RSpec.describe ToyRobot do
 
         end
     end
+    context 'MOVE' do
+        context 'when position is NORTH' do
+            it 'should move unless the border' do
+                y = 3
+                toy.place(0, y, 'NORTH')
+                
+                toy.move
+                y += 1
+                expect(toy.report).to eq("0,#{y},NORTH")
+                # last move beyond the border
+                toy.move
+                # no increment for y
+                expect(toy.report).to eq("0,#{y},NORTH")
+            end
+        end
+    end
 end

@@ -22,6 +22,10 @@ class ToyRobot
         @direction = direction
     end
 
+    def move
+        @y += 1 if valid_place_args?(@x, @y+1, @direction)
+    end
+
     private
     def valid_place_args?(x, y, direction)
         return false unless x >= 0 && x <= @max_pos
