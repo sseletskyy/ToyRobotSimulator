@@ -1,0 +1,2 @@
+class ToyRobot
+end
