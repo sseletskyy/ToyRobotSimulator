@@ -1,6 +1,7 @@
 class ToyRobot
 
     DIRECTIONS = %w(NORTH EAST SOUTH WEST)
+    SIGNS = %w(+ -)
     def initialize
         @dimension = 5
         @max_pos = @dimension - 1
@@ -24,6 +25,22 @@ class ToyRobot
 
     def move
         send("move_#{@direction.downcase}")
+    end
+
+    def left
+        rotate('-')
+    end
+
+    def right
+        rotate('+')
+    end
+
+    def rotate(sign)
+        return unless ( @direction && SIGNS.index(sign) )
+        direction_index = DIRECTIONS.index(@direction)
+        direction_index = direction_index.send(sign, 1) # +1 or -1
+        direction_index %= DIRECTIONS.count
+        @direction = DIRECTIONS[direction_index]        
     end
 
     private

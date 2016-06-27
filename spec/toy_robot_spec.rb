@@ -131,4 +131,52 @@ RSpec.describe ToyRobot do
             end
         end
     end
+    context 'LEFT' do
+        it 'should change direction CCW' do
+            toy.place(0,0,'NORTH')
+            toy.left
+            expect(toy.report).to eq('0,0,WEST')
+
+            toy.left
+            expect(toy.report).to eq('0,0,SOUTH')
+
+            toy.left
+            expect(toy.report).to eq('0,0,EAST')
+
+            toy.left
+            expect(toy.report).to eq('0,0,NORTH')
+        end
+    end
+    context 'RIGHT' do
+        it 'should change direction CW' do
+            toy.place(0,0,'NORTH')
+            toy.right
+            expect(toy.report).to eq('0,0,EAST')
+
+            toy.right
+            expect(toy.report).to eq('0,0,SOUTH')
+
+            toy.right
+            expect(toy.report).to eq('0,0,WEST')
+
+            toy.right
+            expect(toy.report).to eq('0,0,NORTH')
+        end
+    end
+    context 'ROTATE' do
+        it 'should not change direction in direction is not set' do
+            report_str = toy.report
+            expect(report_str).to eq("")
+            toy.rotate('+')
+            expect(toy.report).to eq(report_str)
+        end
+        it 'should not change direction in case of incorrect sign' do
+            toy.place(2,2,'NORTH')
+            report_str = toy.report
+            puts "report_str=#{report_str}" 
+            toy.rotate('&&')
+            expect(toy.report).to eq(report_str)
+        end
+
+    end
 end
