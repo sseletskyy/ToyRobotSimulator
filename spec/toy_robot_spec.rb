@@ -116,5 +116,19 @@ RSpec.describe ToyRobot do
                 expect(toy.report).to eq("0,#{y},SOUTH")
             end
         end
+        context 'when position is WEST' do
+            it 'should move unless the border' do
+                x = 1
+                toy.place(x, 0, 'WEST')
+                
+                toy.move
+                x -= 1
+                expect(toy.report).to eq("#{x},0,WEST")
+                # last move beyond the border
+                toy.move
+                # no increment for x
+                expect(toy.report).to eq("#{x},0,WEST")
+            end
+        end
     end
 end

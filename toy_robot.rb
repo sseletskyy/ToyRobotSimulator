@@ -30,6 +30,8 @@ class ToyRobot
             @x += 1 if valid_place_args?(@x+1, @y, @direction)
         when 'SOUTH'
             @y -= 1 if valid_place_args?(@x, @y-1, @direction)
+        when 'WEST'
+            @x -= 1 if valid_place_args?(@x-1, @y, @direction)        
         end
     end
 
