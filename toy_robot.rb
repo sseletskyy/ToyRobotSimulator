@@ -23,7 +23,12 @@ class ToyRobot
     end
 
     def move
-        @y += 1 if valid_place_args?(@x, @y+1, @direction)
+        case @direction
+        when 'NORTH'
+            @y += 1 if valid_place_args?(@x, @y+1, @direction)
+        when 'EAST'
+            @x += 1 if valid_place_args?(@x+1, @y, @direction)
+        end
     end
 
     private
