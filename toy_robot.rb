@@ -23,25 +23,33 @@ class ToyRobot
     end
 
     def move
-        case @direction
-        when 'NORTH'
-            @y += 1 if valid_place_args?(@x, @y+1, @direction)
-        when 'EAST'
-            @x += 1 if valid_place_args?(@x+1, @y, @direction)
-        when 'SOUTH'
-            @y -= 1 if valid_place_args?(@x, @y-1, @direction)
-        when 'WEST'
-            @x -= 1 if valid_place_args?(@x-1, @y, @direction)        
-        end
+        send("move_#{@direction.downcase}")
     end
 
     private
+
+    def move_north
+        @y += 1 if valid_place_args?(@x, @y+1, @direction)
+    end
+
+    def move_east
+        @x += 1 if valid_place_args?(@x+1, @y, @direction)
+    end
+
+    def move_south
+        @y -= 1 if valid_place_args?(@x, @y-1, @direction)
+    end
+
+    def move_west
+        @x -= 1 if valid_place_args?(@x-1, @y, @direction)
+    end
+
     def valid_place_args?(x, y, direction)
         return false unless x >= 0 && x <= @max_pos
         return false unless y >= 0 && y <= @max_pos
         return false unless DIRECTIONS.index(direction)
         true
     rescue ArgumentError
-        false 
+        false
     end
 end
