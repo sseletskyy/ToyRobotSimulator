@@ -7,10 +7,6 @@ RSpec.describe ToyRobot do
         end
     end
 
-    def place
-        @x = @y = 0
-        @direction = 'NORTH'
-    end
     context 'valid_place_args?' do
         [
             {params:['','',''], expected: false},
@@ -22,6 +18,10 @@ RSpec.describe ToyRobot do
             {params:['1','-1','NORTH'], expected: false},
             {params:['1','1','N'], expected: false},
             {params:['1','1','NORTH'], expected: false},
+            {params:[1,1,'north'], expected: false},
+            {params:[1,1,'east'], expected: false},
+            {params:[1,1,'south'], expected: false},
+            {params:[1,1,'west'], expected: false},
             {params:[1,1,'NORTH'], expected: true},
             {params:[1,1,'EAST'], expected: true},
             {params:[1,1,'SOUTH'], expected: true},
@@ -42,35 +42,35 @@ RSpec.describe ToyRobot do
                 expect(toy.report).to eq("")
             end
         end
-    end
-    context 'with correct arguments' do
-        it 'should change the position' do
-            toy.place(1,1,'NORTH')
-            expect(toy.report).to eq("1,1,NORTH") 
+        context 'with correct arguments' do
+            it 'should change the position' do
+                toy.place(1,1,'NORTH')
+                expect(toy.report).to eq("1,1,NORTH") 
 
-            toy.place(2,2,'SOUTH')    
-            expect(toy.report).to eq("2,2,SOUTH") 
+                toy.place(2,2,'SOUTH')    
+                expect(toy.report).to eq("2,2,SOUTH") 
+            end
         end
-    end
-    context 'with incorrect args' do
-        it 'should not change the position' do
-            # case 1 
-            report_str = toy.report
-            toy.place("")
-            expect(toy.report).to eq(report_str)
+        context 'with incorrect args' do
+            it 'should not change the position' do
+                # case 1 
+                report_str = toy.report
+                toy.place("")
+                expect(toy.report).to eq(report_str)
 
-            # case 2 = incorrect first arg
-            toy.place(2,2,'SOUTH') # set correct    
-            report_str = toy.report
-            toy.place(-5, 4, 'NORTH') # set incorrect
-            expect(toy.report).to eq(report_str)
+                # case 2 = incorrect first arg
+                toy.place(2,2,'SOUTH') # set correct    
+                report_str = toy.report
+                toy.place(-5, 4, 'NORTH') # set incorrect
+                expect(toy.report).to eq(report_str)
 
-            # case 3 = incorrect second arg
-            toy.place(2,2,'SOUTH') # set correct    
-            report_str = toy.report
-            toy.place(3, -3, 'SOUTH') # set incorrect
-            expect(toy.report).to eq(report_str)
+                # case 3 = incorrect second arg
+                toy.place(2,2,'SOUTH') # set correct    
+                report_str = toy.report
+                toy.place(3, -3, 'SOUTH') # set incorrect
+                expect(toy.report).to eq(report_str)
 
+            end
         end
     end
     context 'MOVE' do
