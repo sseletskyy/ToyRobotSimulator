@@ -157,16 +157,16 @@ RSpec.describe ToyRobot do
                expect(toy.report).to eq("")
                expect(toy.move).to be false
 
-               toy.place(4, 4, 'NORTH') 
+               toy.place(4, 4, 'NORTH')
                expect(toy.move).to be false
 
-               toy.place(4, 4, 'EAST') 
+               toy.place(4, 4, 'EAST')
                expect(toy.move).to be false
 
-               toy.place(0, 0, 'SOUTH') 
+               toy.place(0, 0, 'SOUTH')
                expect(toy.move).to be false
 
-               toy.place(0, 0, 'WEST') 
+               toy.place(0, 0, 'WEST')
                expect(toy.move).to be false
             end
         end
@@ -257,7 +257,7 @@ RSpec.describe ToyRobot do
             .each do |option|
                 it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do
                     toy.place(1, 1, 'NORTH')
-                    # expect(toy.parse_line(option[:line])).to eq(option[:expected])
+                    expect(toy.parse_line(option[:line])).to eq(option[:expected])
                 end
             end
 

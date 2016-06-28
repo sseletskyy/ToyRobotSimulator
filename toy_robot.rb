@@ -51,7 +51,10 @@ class ToyRobot
         when 'place'
             args = args.to_a.join.split(',').map(&:strip)
             return place(*args)
-        end    
+        when 'move'
+            return move
+        end   
+        false 
     end
 
     private
