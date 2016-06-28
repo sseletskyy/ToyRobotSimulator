@@ -228,7 +228,7 @@ RSpec.describe ToyRobot do
         end
     end
     context 'PARSE_LINE' do
-        context 'PLACE X,Y,D' do
+        context 'when PLACE is NOT set' do
             [
                 {line:'PLACE ', expected: false},
                 {line:'PLACE 1', expected: false},
@@ -238,7 +238,14 @@ RSpec.describe ToyRobot do
                 {line:'PLACE 1,2,NORTH', expected: true},
                 {line:' PLACE 1,2,NORTH', expected: true},
                 {line:'PLACE 1, 2, NORTH', expected: true},
-                {line:'PLACE  1 , 2 , NORTH ', expected: true}
+                {line:'PLACE  1 , 2 , NORTH ', expected: true},
+
+                {line:'MOVE', expected: false},
+
+                {line:'LEFT', expected: false},
+
+                {line:'RIGHT', expected: false},
+                {line:'REPORT', expected: ""}
             ]
             .each do |option|
                 it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do
@@ -246,36 +253,44 @@ RSpec.describe ToyRobot do
                 end
             end
         end
-        context 'MOVE' do
+        context 'when PLACE is set' do
             [
+                {line:'PLACE ', expected: false},
+                {line:'PLACE 1', expected: false},
+                {line:'PLACE 1,2', expected: false},
+                {line:'PLACE 1,2,N', expected: false},
+                {line:'PLACE 1,2,SOUT', expected: false},
+                {line:'PLACE 1,2,NORTH', expected: true},
+                {line:' PLACE 1,2,NORTH', expected: true},
+                {line:'PLACE 1, 2, NORTH', expected: true},
+                {line:'PLACE  1 , 2 , NORTH ', expected: true},
+
                 {line:'M ', expected: false},
                 {line:'MOV ', expected: false},
                 {line:'MOVE', expected: true},
                 {line:' MOVE ', expected: true},
-                {line:'MOVE 1', expected: true}
-            ]
-            .each do |option|
-                it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do
-                    toy.place(1, 1, 'NORTH')
-                    expect(toy.parse_line(option[:line])).to eq(option[:expected])
-                end
-            end
+                {line:'MOVE 1', expected: true},
 
-        end
-        context 'LEFT' do
-            [
                 {line:'LEF', expected: false},
                 {line:'LEFT', expected: true},
                 {line:'  LEFT ', expected: true},
-                {line:'LEFT X', expected: true}
+                {line:'LEFT X', expected: true},
+
+                {line:'RIGH', expected: false},
+                {line:'RIGHT', expected: true},
+                {line:'  RIGHT ', expected: true},
+                {line:'RIGHT X', expected: true},
+
+                {line:'REPOR', expected: false},
+                {line:'REPORT', expected: "2,2,NORTH"}
+
             ]
             .each do |option|
                 it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do
-                    toy.place(1, 1, 'NORTH')
+                    toy.place(2, 2, 'NORTH')
                     expect(toy.parse_line(option[:line])).to eq(option[:expected])
                 end
             end
-
         end
     end
 end

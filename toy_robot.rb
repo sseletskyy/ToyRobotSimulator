@@ -48,14 +48,13 @@ class ToyRobot
 
     def parse_line(line)
         command, *args = line.split(' ')
-        case command.downcase
+        command.downcase!
+        case command
         when 'place'
             args = args.to_a.join.split(',').map(&:strip)
             return place(*args)
-        when 'move'
-            return move
-        when 'left'
-            return left   
+        when 'move', 'left', 'right', 'report'
+            return send(command)
         end
         false 
     end
