@@ -25,7 +25,8 @@ class ToyRobot
     end
 
     def move
-        send("move_#{@direction.downcase}") if @direction
+        return false unless @direction
+        send("move_#{@direction.downcase}") 
     end
 
     def left
@@ -56,19 +57,27 @@ class ToyRobot
     private
 
     def move_north
-        @y += 1 if valid_place_args?(@x, @y+1, @direction)
+        return false unless valid_place_args?(@x, @y+1, @direction)
+        @y += 1
+        true
     end
 
     def move_east
-        @x += 1 if valid_place_args?(@x+1, @y, @direction)
+        return false unless valid_place_args?(@x+1, @y, @direction)
+        @x += 1
+        true
     end
 
     def move_south
-        @y -= 1 if valid_place_args?(@x, @y-1, @direction)
+        return false unless valid_place_args?(@x, @y-1, @direction)
+        @y -= 1
+        true
     end
 
     def move_west
-        @x -= 1 if valid_place_args?(@x-1, @y, @direction)
+        return false unless valid_place_args?(@x-1, @y, @direction)
+        @x -= 1
+        true
     end
 
     def valid_place_args?(x, y, direction)
