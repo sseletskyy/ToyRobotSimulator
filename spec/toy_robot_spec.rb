@@ -164,13 +164,13 @@ RSpec.describe ToyRobot do
         end
     end
     context 'ROTATE' do
-        it 'should not change direction in direction is not set' do
+        it 'should not change direction if direction is not set' do
             report_str = toy.report
             expect(report_str).to eq("")
             toy.rotate('+')
             expect(toy.report).to eq(report_str)
         end
-        it 'should not change direction in case of incorrect sign' do
+        it 'should not change direction if sign is incorrect' do
             toy.place(2,2,'NORTH')
             report_str = toy.report
             puts "report_str=#{report_str}" 
@@ -178,5 +178,13 @@ RSpec.describe ToyRobot do
             expect(toy.report).to eq(report_str)
         end
 
+    end
+    context 'ignore other commands until position is set' do
+        ['move', 'left', 'right'].each do |command|
+            it "command=#{command}" do
+                toy.send(command)
+                expect(toy.report).to eq("")
+            end
+        end
     end
 end

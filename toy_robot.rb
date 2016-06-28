@@ -24,7 +24,7 @@ class ToyRobot
     end
 
     def move
-        send("move_#{@direction.downcase}")
+        send("move_#{@direction.downcase}") if @direction
     end
 
     def left
