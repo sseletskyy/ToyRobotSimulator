@@ -7,8 +7,11 @@ class Game
     end
     def main
         ARGF.each do |line|
-            @toy.parse_line line
+            result = @toy.parse_line line
+            puts result if result.class == String
         end     
+    rescue Interrupt => e
+        puts "\n\nGame over :)"
     end
     
 end
