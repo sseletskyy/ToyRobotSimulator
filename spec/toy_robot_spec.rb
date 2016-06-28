@@ -41,6 +41,9 @@ RSpec.describe ToyRobot do
                 toy.place
                 expect(toy.report).to eq("")
             end
+            it 'should return false' do
+               expect(toy.place).to be false
+            end
         end
         context 'with correct arguments' do
             it 'should change the position' do
@@ -50,6 +53,10 @@ RSpec.describe ToyRobot do
                 toy.place(2,2,'SOUTH')    
                 expect(toy.report).to eq("2,2,SOUTH") 
             end
+            it 'should return true' do
+               expect(toy.place(1,2,'SOUTH')).to be true
+            end
+
         end
         context 'with incorrect args' do
             it 'should not change the position' do
@@ -184,6 +191,25 @@ RSpec.describe ToyRobot do
             it "command=#{command}" do
                 toy.send(command)
                 expect(toy.report).to eq("")
+            end
+        end
+    end
+    context 'PARSE_LINE' do
+        context 'PLACE X,Y,D' do
+            [
+                {line:'PLACE ', expected: false},
+                {line:'PLACE 1', expected: false},
+                {line:'PLACE 1,2', expected: false},
+                {line:'PLACE 1,2,N', expected: false},
+                {line:'PLACE 1,2,SOUT', expected: false},
+                {line:'PLACE 1,2,NORTH', expected: true},
+                {line:'PLACE 1, 2, NORTH', expected: true},
+                {line:'PLACE  1 , 2 , NORTH ', expected: true}
+            ]
+            .each do |option|
+                it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do
+                    expect(toy.parse_line(option[:line])).to eq(option[:expected])
+                end
             end
         end
     end

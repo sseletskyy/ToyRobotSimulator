@@ -16,11 +16,12 @@ class ToyRobot
         y = y.to_i
         direction = direction.to_s
         
-        return unless valid_place_args?(x, y, direction)
+        return false unless valid_place_args?(x, y, direction)
         
         @x = x
         @y = y
         @direction = direction
+        true
     end
 
     def move
@@ -41,6 +42,15 @@ class ToyRobot
         direction_index = direction_index.send(sign, 1) # +1 or -1
         direction_index %= DIRECTIONS.count
         @direction = DIRECTIONS[direction_index]        
+    end
+
+    def parse_line(line)
+        command, *args = line.split(' ')
+        case command.downcase
+        when 'place'
+            args = args.to_a.join.split(',').map(&:strip)
+            return place(*args)
+        end    
     end
 
     private
