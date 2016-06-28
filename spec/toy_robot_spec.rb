@@ -222,7 +222,7 @@ RSpec.describe ToyRobot do
     context 'ignore other commands until position is set' do
         ['move', 'left', 'right'].each do |command|
             it "command=#{command}" do
-                toy.send(command)
+                expect(toy.send(command)).to eq false
                 expect(toy.report).to eq("")
             end
         end
@@ -253,6 +253,21 @@ RSpec.describe ToyRobot do
                 {line:'MOVE', expected: true},
                 {line:' MOVE ', expected: true},
                 {line:'MOVE 1', expected: true}
+            ]
+            .each do |option|
+                it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do
+                    toy.place(1, 1, 'NORTH')
+                    expect(toy.parse_line(option[:line])).to eq(option[:expected])
+                end
+            end
+
+        end
+        context 'LEFT' do
+            [
+                {line:'LEF', expected: false},
+                {line:'LEFT', expected: true},
+                {line:'  LEFT ', expected: true},
+                {line:'LEFT X', expected: true}
             ]
             .each do |option|
                 it "check option '#{option[:line].to_s}' expected '#{option[:expected]}'" do

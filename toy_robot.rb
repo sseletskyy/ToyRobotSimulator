@@ -38,11 +38,12 @@ class ToyRobot
     end
 
     def rotate(sign)
-        return unless ( @direction && SIGNS.index(sign) )
+        return false unless ( @direction && SIGNS.index(sign) )
         direction_index = DIRECTIONS.index(@direction)
         direction_index = direction_index.send(sign, 1) # +1 or -1
         direction_index %= DIRECTIONS.count
-        @direction = DIRECTIONS[direction_index]        
+        @direction = DIRECTIONS[direction_index]  
+        true      
     end
 
     def parse_line(line)
@@ -53,7 +54,9 @@ class ToyRobot
             return place(*args)
         when 'move'
             return move
-        end   
+        when 'left'
+            return left   
+        end
         false 
     end
 
